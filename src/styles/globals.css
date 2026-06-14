@@ -1,0 +1,145 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-feature-settings: "tnum" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--surface-canvas);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter Tight', 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 600;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--border-active);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--brand-accent);
+    color: var(--text-inverse);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--surface-panel);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+}
+
+@layer components {
+  .action-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .action-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--risk-rail, var(--border-subtle));
+    border-radius: 6px 0 0 6px;
+  }
+
+  .action-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+  }
+
+  .action-card.selected {
+    border-color: var(--border-active);
+    box-shadow: var(--shadow-md);
+  }
+
+  .evidence-tab {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .evidence-tab.active {
+    color: var(--brand-accent);
+    border-bottom-color: var(--brand-accent);
+  }
+
+  .evidence-tab:hover:not(.active) {
+    color: var(--text-secondary);
+  }
+
+  .project-lane-card {
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: background 0.12s;
+  }
+
+  .project-lane-card:hover {
+    background: var(--surface-panel);
+  }
+
+  .project-lane-card.selected {
+    background: var(--surface-panel);
+  }
+
+  .project-lane-card[data-risk="red"] {
+    border-left-color: var(--risk-red-rail);
+  }
+  .project-lane-card[data-risk="amber"] {
+    border-left-color: var(--risk-amber-rail);
+  }
+  .project-lane-card[data-risk="blue"] {
+    border-left-color: var(--risk-blue-rail);
+  }
+  .project-lane-card[data-risk="green"] {
+    border-left-color: var(--risk-green-rail);
+  }
+  .project-lane-card[data-risk="black"] {
+    border-left-color: var(--risk-black-rail);
+  }
+}

@@ -1,0 +1,141 @@
+/* DPI WorkOps — Design Tokens: Light Mode */
+:root[data-theme="light"] {
+  --surface-canvas: #F8F7F3;
+  --surface-panel: #F0EFEA;
+  --surface-card: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+
+  --text-primary: #17202B;
+  --text-secondary: #3F4650;
+  --text-muted: #6B7280;
+  --text-inverse: #FFFFFF;
+  --text-brand: #0B2450;
+  --text-link: #0089C7;
+
+  --brand-primary: #0B2450;
+  --brand-accent: #0089C7;
+  --brand-heritage: #D09A38;
+  --brand-field: #F06C35;
+
+  --border-subtle: #DDDAD2;
+  --border-strong: #B9B6AD;
+  --border-active: #0089C7;
+  --border-evidence: #D09A38;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.10);
+  --shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.16);
+
+  /* Risk — Light */
+  --risk-green-bg: #EAF7EF;
+  --risk-green-text: #166534;
+  --risk-green-rail: #22A05A;
+  --risk-green-border: #B9E6C8;
+
+  --risk-blue-bg: #E8F5FC;
+  --risk-blue-text: #075985;
+  --risk-blue-rail: #17A7E0;
+  --risk-blue-border: #B8E4F5;
+
+  --risk-amber-bg: #FFF5DF;
+  --risk-amber-text: #8A5A10;
+  --risk-amber-rail: #D09A38;
+  --risk-amber-border: #E8C77A;
+
+  --risk-red-bg: #FDECEC;
+  --risk-red-text: #991B1B;
+  --risk-red-rail: #DC2626;
+  --risk-red-border: #F5B5B5;
+
+  --risk-black-bg: #E8E8E8;
+  --risk-black-text: #111827;
+  --risk-black-rail: #111827;
+  --risk-black-border: #A1A1AA;
+}
+
+/* DPI WorkOps — Design Tokens: Dark Mode */
+:root[data-theme="dark"] {
+  --surface-canvas: #07111F;
+  --surface-panel: #0D1B2D;
+  --surface-card: #122236;
+  --surface-elevated: #172B43;
+
+  --text-primary: #F4F7FA;
+  --text-secondary: #C7D0DA;
+  --text-muted: #8E9AAA;
+  --text-inverse: #07111F;
+  --text-brand: #E6F2FF;
+  --text-link: #5BC5EF;
+
+  --brand-primary: #D8E9FF;
+  --brand-accent: #5BC5EF;
+  --brand-heritage: #E7C37A;
+  --brand-field: #F6A77E;
+
+  --border-subtle: #24384F;
+  --border-strong: #3D5874;
+  --border-active: #5BC5EF;
+  --border-evidence: #E7C37A;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+  /* Risk — Dark */
+  --risk-green-bg: #0F2A1B;
+  --risk-green-text: #B7F0C9;
+  --risk-green-rail: #47D47E;
+  --risk-green-border: #215C39;
+
+  --risk-blue-bg: #0B2638;
+  --risk-blue-text: #B8E9FA;
+  --risk-blue-rail: #5BC5EF;
+  --risk-blue-border: #1B526D;
+
+  --risk-amber-bg: #30230D;
+  --risk-amber-text: #F5D992;
+  --risk-amber-rail: #E7C37A;
+  --risk-amber-border: #6B4A16;
+
+  --risk-red-bg: #351313;
+  --risk-red-text: #FCA5A5;
+  --risk-red-rail: #EF4444;
+  --risk-red-border: #7F1D1D;
+
+  --risk-black-bg: #050505;
+  --risk-black-text: #F5F5F5;
+  --risk-black-rail: #FFFFFF;
+  --risk-black-border: #52525B;
+}
+
+/* Risk context tokens — applied via data-risk attribute */
+[data-risk="green"] {
+  --risk-bg: var(--risk-green-bg);
+  --risk-text: var(--risk-green-text);
+  --risk-rail: var(--risk-green-rail);
+  --risk-border: var(--risk-green-border);
+}
+[data-risk="blue"] {
+  --risk-bg: var(--risk-blue-bg);
+  --risk-text: var(--risk-blue-text);
+  --risk-rail: var(--risk-blue-rail);
+  --risk-border: var(--risk-blue-border);
+}
+[data-risk="amber"] {
+  --risk-bg: var(--risk-amber-bg);
+  --risk-text: var(--risk-amber-text);
+  --risk-rail: var(--risk-amber-rail);
+  --risk-border: var(--risk-amber-border);
+}
+[data-risk="red"] {
+  --risk-bg: var(--risk-red-bg);
+  --risk-text: var(--risk-red-text);
+  --risk-rail: var(--risk-red-rail);
+  --risk-border: var(--risk-red-border);
+}
+[data-risk="black"] {
+  --risk-bg: var(--risk-black-bg);
+  --risk-text: var(--risk-black-text);
+  --risk-rail: var(--risk-black-rail);
+  --risk-border: var(--risk-black-border);
+}
