@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import init_db
 from app.services.seed import seed_db
-from app.routers import health, projects, actions, approvals, audit
+from app.routers import health, projects, actions, approvals, audit, gmail
 
 
 @asynccontextmanager
@@ -36,3 +36,4 @@ app.include_router(projects.router)
 app.include_router(actions.router)
 app.include_router(approvals.router)
 app.include_router(audit.router)
+app.include_router(gmail.router)

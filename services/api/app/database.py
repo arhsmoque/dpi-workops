@@ -92,7 +92,32 @@ CREATE TABLE IF NOT EXISTS audit_events (
     source       TEXT
 );
 
--- Future sprints: email_threads, drafts, attachments, parties
+-- Sprint 1: Gmail OAuth tokens (one row per Gmail account)
+CREATE TABLE IF NOT EXISTS gmail_tokens (
+    email       TEXT PRIMARY KEY,
+    access_token  TEXT NOT NULL,
+    refresh_token TEXT,
+    token_expiry  TEXT,          -- ISO-8601 UTC
+    scopes      TEXT,
+    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Sprint 1: raw email thread index (source of truth before action classification)
+CREATE TABLE IF NOT EXISTS email_threads (
+    thread_id       TEXT PRIMARY KEY,
+    gmail_account   TEXT NOT NULL REFERENCES gmail_tokens(email),
+    subject         TEXT NOT NULL,
+    from_addr       TEXT NOT NULL,
+    snippet         TEXT,
+    received_at     TIMESTAMP NOT NULL,
+    project_code    TEXT REFERENCES projects(code),
+    classified_at   TIMESTAMP,
+    gmail_link      TEXT NOT NULL,
+    is_processed    BOOLEAN NOT NULL DEFAULT 0,
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Future sprints: drafts, attachments, parties
 
 CREATE INDEX IF NOT EXISTS idx_actions_project ON action_cards(project_code);
 CREATE INDEX IF NOT EXISTS idx_actions_status  ON action_cards(status);
@@ -100,6 +125,8 @@ CREATE INDEX IF NOT EXISTS idx_actions_risk    ON action_cards(risk_level);
 CREATE INDEX IF NOT EXISTS idx_audit_timestamp ON audit_events(timestamp DESC);
 CREATE INDEX IF NOT EXISTS idx_audit_project   ON audit_events(project_code);
 CREATE INDEX IF NOT EXISTS idx_sources_action  ON source_items(action_id, sort_order);
+CREATE INDEX IF NOT EXISTS idx_threads_project ON email_threads(project_code, received_at DESC);
+CREATE INDEX IF NOT EXISTS idx_threads_processed ON email_threads(is_processed, received_at DESC);
 """
 
 

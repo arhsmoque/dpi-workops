@@ -39,7 +39,7 @@ export function TopCommandBar() {
             style={{
               color: 'rgba(255,255,255,0.42)',
               fontSize: 9,
-              fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
+              fontFamily: '"DM Sans", system-ui, sans-serif',
               letterSpacing: '0.07em',
               textTransform: 'uppercase',
             }}
@@ -65,7 +65,7 @@ export function TopCommandBar() {
           borderRadius: 8,
           padding: '4px 10px',
           fontSize: 11,
-          fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
+          fontFamily: '"DM Sans", system-ui, sans-serif',
           fontWeight: 600,
           letterSpacing: '0.02em',
           textDecoration: 'none',
@@ -100,7 +100,7 @@ export function TopCommandBar() {
               background: 'rgba(255,255,255,0.07)',
               border: '1px solid rgba(255,255,255,0.09)',
               color: 'rgba(255,255,255,0.88)',
-              fontFamily: 'Figtree, system-ui, sans-serif',
+              fontFamily: '"DM Sans", system-ui, sans-serif',
             }}
             onFocus={e => {
               e.currentTarget.style.background = 'rgba(255,255,255,0.11)'
@@ -124,7 +124,7 @@ export function TopCommandBar() {
           borderRadius: 8,
           padding: '5px 12px',
           fontSize: 11,
-          fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
+          fontFamily: '"DM Sans", system-ui, sans-serif',
           fontWeight: 600,
           letterSpacing: '0.02em',
           cursor: 'pointer',
@@ -158,7 +158,7 @@ export function TopCommandBar() {
           style={{
             color: 'rgba(255,255,255,0.40)',
             fontSize: 9,
-            fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
+            fontFamily: '"DM Sans", system-ui, sans-serif',
             letterSpacing: '0.06em',
             textTransform: 'uppercase',
           }}
@@ -194,7 +194,7 @@ export function TopCommandBar() {
           background: 'rgba(255,255,255,0.08)',
           border: '1px solid rgba(255,255,255,0.12)',
           color: 'rgba(255,255,255,0.80)',
-          fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
+          fontFamily: '"DM Sans", system-ui, sans-serif',
           fontSize: 11,
           fontWeight: 600,
           letterSpacing: '0.02em',

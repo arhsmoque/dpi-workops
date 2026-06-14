@@ -1,19 +1,20 @@
 /* ═══════════════════════════════════════════════════════════════
-   DPI WorkOps — Executive AI Design Tokens
-   Brand DNA: DPIK TUGAS navy/gold + Homestay warm parchment
-   AI layer:  Electric sky blue #0EA5E9 — enthusiasm accent
+   DPI WorkOps — Design Tokens
+   Light: TUGAS color scheme (DPIK navy/gold, clean white surfaces)
+   Dark:  Neutral warm-gray (no blue undertone)
    ═══════════════════════════════════════════════════════════════ */
 
-/* ── Light Mode ─────────────────────────────────────────────── */
+/* ── Light Mode — exact TUGAS palette ───────────────────────── */
 :root[data-theme="light"] {
-  /* Surfaces — warm off-white, never pure white */
-  --surface-canvas:  #F7F4EE;
-  --surface-panel:   #EEEBE3;
-  --surface-card:    #FFFDF8;
+  /* Surfaces — TUGAS exact values */
+  --surface-canvas:  #FFFFFF;
+  --surface-panel:   #FAFAF9;
+  --surface-card:    #FFFFFF;
   --surface-elevated:#FFFFFF;
-  --surface-sidebar: #FAFAF9;
+  --surface-hover:   #F5F5F4;
+  --surface-selected:#EEF1F6;
 
-  /* Text */
+  /* Text — TUGAS exact values */
   --text-primary:    #1C1917;
   --text-secondary:  #57534E;
   --text-muted:      #A8A29E;
@@ -21,34 +22,38 @@
   --text-brand:      #0A1F44;
   --text-link:       #1E3A5F;
 
-  /* DPIK Brand — Navy & Gold */
-  --brand-primary:   #0A1F44;   /* Navy 900 — authority */
-  --brand-mid:       #1E3A5F;   /* Navy 600 — interactive */
-  --brand-accent:    #C9972B;   /* Gold 500 — prestige */
-  --brand-gold-light:#E8B84B;   /* Gold 400 — highlight */
-  --brand-gold-pale: #FAF1D4;   /* Gold 100 — subtle fill */
-  --brand-ai:        #0EA5E9;   /* Electric sky — AI enthusiasm */
-  --brand-ai-pale:   #E0F2FE;   /* AI pale fill */
-  --brand-field:     #D97706;   /* Amber — field signals */
+  /* DPIK Navy & Gold — TUGAS exact values */
+  --brand-primary:   #0A1F44;   /* navy-900 */
+  --brand-mid:       #1E3A5F;   /* navy-600 — buttons, active, links */
+  --brand-accent:    #C9972B;   /* gold-500 — progress, emphasis */
+  --brand-gold-light:#E8B84B;   /* gold-400 */
+  --brand-gold-pale: #FAF1D4;   /* gold-100 */
+  --brand-navy-pale: #EEF1F6;   /* navy-50 */
+  --brand-ai:        #0EA5E9;   /* AI electric blue */
+  --brand-ai-pale:   #E0F2FE;
+  --brand-field:     #D97706;
 
-  /* Borders */
-  --border-subtle:   #F0EEED;
-  --border-default:  #E5E0D8;
-  --border-strong:   #C8C0B4;
+  /* Borders — TUGAS exact values */
+  --border-subtle:   #F5F5F4;
+  --border-default:  #F0EEED;
+  --border-strong:   #D6D0CA;
   --border-active:   #1E3A5F;
   --border-evidence: #C9972B;
-  --border-ai:       rgba(14,165,233,0.30);
+  --border-ai:       rgba(14,165,233,0.28);
 
   /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(10,31,68,0.07), 0 1px 2px rgba(10,31,68,0.04);
-  --shadow-md:  0 6px 24px rgba(10,31,68,0.10), 0 2px 6px rgba(10,31,68,0.05);
-  --shadow-lg:  0 18px 48px rgba(10,31,68,0.14), 0 6px 14px rgba(10,31,68,0.07);
-  --shadow-ai:  0 0 0 1px rgba(14,165,233,0.22), 0 4px 18px rgba(14,165,233,0.13);
-  --shadow-glass:0 20px 60px rgba(10,31,68,0.08), 0 0 32px rgba(255,253,248,0.12);
+  --shadow-sm:  0 1px 3px rgba(10,31,68,0.06), 0 1px 2px rgba(10,31,68,0.03);
+  --shadow-md:  0 6px 24px rgba(10,31,68,0.09), 0 2px 6px rgba(10,31,68,0.04);
+  --shadow-lg:  0 18px 50px rgba(10,31,68,0.14), 0 6px 14px rgba(10,31,68,0.06);
+  --shadow-ai:  0 0 0 1px rgba(14,165,233,0.20), 0 4px 18px rgba(14,165,233,0.12);
+  --shadow-glass:0 30px 80px rgba(10,31,68,0.06), 0 0 50px rgba(238,241,246,0.20);
 
-  /* Glass */
-  --glass-bg:     rgba(255,253,248,0.84);
-  --glass-border: rgba(10,31,68,0.09);
+  /* Glass — light frosted */
+  --glass-bg:     rgba(255,255,255,0.84);
+  --glass-border: rgba(10,31,68,0.08);
+
+  /* Logo watermark opacity */
+  --logo-watermark-opacity: 0.05;
 
   /* Risk — Light */
   --risk-green-bg:     #D1FAE5;
@@ -56,10 +61,10 @@
   --risk-green-rail:   #059669;
   --risk-green-border: #A7F3D0;
 
-  --risk-blue-bg:      #E0F2FE;
-  --risk-blue-text:    #0C4A6E;
-  --risk-blue-rail:    #0EA5E9;
-  --risk-blue-border:  #BAE6FD;
+  --risk-blue-bg:      #EEF1F6;
+  --risk-blue-text:    #1E3A5F;
+  --risk-blue-rail:    #1E3A5F;
+  --risk-blue-border:  #C3D0E4;
 
   --risk-amber-bg:     #FAF1D4;
   --risk-amber-text:   #92400E;
@@ -71,22 +76,23 @@
   --risk-red-rail:     #DC2626;
   --risk-red-border:   #FECACA;
 
-  --risk-black-bg:     #E5E7EB;
+  --risk-black-bg:     #F3F4F6;
   --risk-black-text:   #111827;
   --risk-black-rail:   #374151;
   --risk-black-border: #D1D5DB;
 }
 
-/* ── Dark Mode — neutral gray surfaces, no blue undertone ───── */
+/* ── Dark Mode — warm neutral grays, no blue undertone ──────── */
 :root[data-theme="dark"] {
-  /* Surfaces — warm-neutral charcoal grays */
+  /* Surfaces — charcoal gray, no blue */
   --surface-canvas:  #141414;
   --surface-panel:   #1C1C1C;
   --surface-card:    #242424;
   --surface-elevated:#2E2E2E;
-  --surface-sidebar: #181818;
+  --surface-hover:   #2A2A2A;
+  --surface-selected:#333333;
 
-  /* Text — warm cream, not blue-white */
+  /* Text — warm cream */
   --text-primary:    #F0EBE3;
   --text-secondary:  #A89F95;
   --text-muted:      #6B6560;
@@ -94,45 +100,49 @@
   --text-brand:      #F0EBE3;
   --text-link:       #E8B84B;
 
-  /* DPIK Brand — gold leads on dark, navy stays as accent */
+  /* Brand on dark — gold leads */
   --brand-primary:   #F0EBE3;
-  --brand-mid:       #E8B84B;   /* Gold as primary interactive on dark */
-  --brand-accent:    #E8B84B;   /* Gold 400 — prestige on dark */
+  --brand-mid:       #E8B84B;   /* gold as primary interactive */
+  --brand-accent:    #E8B84B;
   --brand-gold-light:#F5CE72;
   --brand-gold-pale: #2A1F08;
-  --brand-ai:        #38BDF8;   /* AI blue — unchanged */
+  --brand-navy-pale: #1A1E28;
+  --brand-ai:        #38BDF8;
   --brand-ai-pale:   #0A1E2A;
   --brand-field:     #FBBF24;
 
-  /* Borders — subtle warm grays */
-  --border-subtle:   rgba(240,235,227,0.08);
-  --border-default:  rgba(240,235,227,0.13);
-  --border-strong:   rgba(240,235,227,0.22);
+  /* Borders — warm gray */
+  --border-subtle:   rgba(240,235,227,0.07);
+  --border-default:  rgba(240,235,227,0.12);
+  --border-strong:   rgba(240,235,227,0.20);
   --border-active:   #E8B84B;
   --border-evidence: #E8B84B;
-  --border-ai:       rgba(56,189,248,0.28);
+  --border-ai:       rgba(56,189,248,0.26);
 
-  /* Shadows — deeper on gray */
+  /* Shadows */
   --shadow-sm:  0 1px 3px rgba(0,0,0,0.40);
   --shadow-md:  0 6px 24px rgba(0,0,0,0.50);
   --shadow-lg:  0 18px 48px rgba(0,0,0,0.60);
-  --shadow-ai:  0 0 0 1px rgba(56,189,248,0.20), 0 4px 18px rgba(56,189,248,0.15);
+  --shadow-ai:  0 0 0 1px rgba(56,189,248,0.18), 0 4px 18px rgba(56,189,248,0.14);
   --shadow-glass:0 20px 60px rgba(0,0,0,0.50);
 
   /* Glass */
   --glass-bg:     rgba(28,28,28,0.88);
   --glass-border: rgba(240,235,227,0.07);
 
-  /* Risk — Dark (desaturated to suit gray canvas) */
+  /* Logo watermark opacity */
+  --logo-watermark-opacity: 0.04;
+
+  /* Risk — Dark */
   --risk-green-bg:     #0D2218;
   --risk-green-text:   #6EE7B7;
   --risk-green-rail:   #34D399;
   --risk-green-border: #1A4030;
 
-  --risk-blue-bg:      #0D1E2A;
-  --risk-blue-text:    #BAE6FD;
-  --risk-blue-rail:    #38BDF8;
-  --risk-blue-border:  #142840;
+  --risk-blue-bg:      #1A1E28;
+  --risk-blue-text:    #A5B4D4;
+  --risk-blue-rail:    #7B93C0;
+  --risk-blue-border:  #2A3048;
 
   --risk-amber-bg:     #231808;
   --risk-amber-text:   #FDE68A;
@@ -150,7 +160,7 @@
   --risk-black-border: #303030;
 }
 
-/* ── Risk context tokens (data-risk attribute) ──────────────── */
+/* ── Risk context tokens ────────────────────────────────────── */
 [data-risk="green"] { --risk-bg:var(--risk-green-bg); --risk-text:var(--risk-green-text); --risk-rail:var(--risk-green-rail); --risk-border:var(--risk-green-border); }
 [data-risk="blue"]  { --risk-bg:var(--risk-blue-bg);  --risk-text:var(--risk-blue-text);  --risk-rail:var(--risk-blue-rail);  --risk-border:var(--risk-blue-border);  }
 [data-risk="amber"] { --risk-bg:var(--risk-amber-bg); --risk-text:var(--risk-amber-text); --risk-rail:var(--risk-amber-rail); --risk-border:var(--risk-amber-border); }

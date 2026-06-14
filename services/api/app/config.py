@@ -27,5 +27,13 @@ class Settings(BaseSettings):
     allow_autonomous_send: bool = False
     allow_autonomous_submit: bool = False
 
+    # Sprint 1 — Gmail OAuth
+    google_client_id: str = ""
+    google_client_secret: str = ""
+    # Redirect URI must match Google Cloud Console configuration
+    google_redirect_uri: str = "http://localhost:8000/api/gmail/oauth/callback"
+    # How many days of email history to fetch on first sync
+    gmail_history_days: int = 30
+
 
 settings = Settings()

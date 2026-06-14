@@ -53,7 +53,7 @@ function NavBar() {
               color: isActive ? 'var(--brand-mid)' : 'var(--text-muted)',
               background: isActive ? 'var(--surface-card)' : 'transparent',
               borderRight: isActive ? '2px solid var(--brand-mid)' : '2px solid transparent',
-              fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
+              fontFamily: '"DM Sans", system-ui, sans-serif',
             }}
           >
             <Icon size={16} strokeWidth={isActive ? 2 : 1.5} />
@@ -133,12 +133,18 @@ export function App() {
         <NavBar />
         <ProjectRail />
 
-        {/* Main work surface */}
+        {/* Main work surface — logo watermark behind content */}
         <main
           className="flex-1 overflow-hidden"
-          style={{ background: 'var(--surface-canvas)' }}
+          style={{ background: 'var(--surface-canvas)', position: 'relative' }}
         >
-          <MainContent />
+          {/* Translucent DPIK logo — Homestay hero bg style */}
+          <div className="logo-watermark" aria-hidden="true">
+            <img src="/logo-dpik.png" alt="" draggable={false} />
+          </div>
+          <div className="content-above-watermark h-full overflow-hidden">
+            <MainContent />
+          </div>
         </main>
 
         {/* Evidence rail */}
