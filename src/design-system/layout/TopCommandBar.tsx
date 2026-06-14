@@ -185,16 +185,35 @@ export function TopCommandBar() {
         )}
       </button>
 
-      {/* Theme toggle */}
+      {/* Theme toggle — pill with label */}
       <button
         onClick={toggleTheme}
-        className="shrink-0 p-1.5 rounded-lg"
-        style={{ color: 'rgba(255,255,255,0.65)' }}
+        className="shrink-0 flex items-center gap-1.5 rounded-lg transition-all"
+        style={{
+          padding: '5px 10px',
+          background: 'rgba(255,255,255,0.08)',
+          border: '1px solid rgba(255,255,255,0.12)',
+          color: 'rgba(255,255,255,0.80)',
+          fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: '0.02em',
+          cursor: 'pointer',
+        }}
         title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
-        onMouseLeave={e => e.currentTarget.style.background = ''}
+        onMouseEnter={e => {
+          e.currentTarget.style.background = 'rgba(255,255,255,0.14)'
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.22)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'
+        }}
       >
-        {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+        {theme === 'light' ? <Moon size={13} /> : <Sun size={13} />}
+        <span className="hidden sm:inline">
+          {theme === 'light' ? 'Dark' : 'Light'}
+        </span>
       </button>
 
       {/* Settings */}

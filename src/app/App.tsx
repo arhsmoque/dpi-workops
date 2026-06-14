@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Radar, List, Edit3, FileStack, Shield, Settings, ShieldCheck } from 'lucide-react'
 import { useStore } from './store'
 import { TopCommandBar } from '@/design-system/layout/TopCommandBar'
@@ -107,10 +108,24 @@ function MainContent() {
 }
 
 export function App() {
+  const { loadData, loading, error } = useStore()
+
+  useEffect(() => {
+    loadData()
+  }, [loadData])
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen text-sm" style={{ color: 'var(--risk-red-text)', background: 'var(--surface-canvas)' }}>
+        Backend unreachable — {error}
+      </div>
+    )
+  }
+
   return (
     <div
       className="flex flex-col h-screen overflow-hidden"
-      style={{ background: 'var(--surface-canvas)' }}
+      style={{ background: 'var(--surface-canvas)', opacity: loading ? 0.6 : 1, transition: 'opacity 0.2s' }}
     >
       <TopCommandBar />
 

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import type { ActionCard, Project, EvidenceTab, MainView, RiskLevel } from '@/types'
-import { mockProjects, mockActions, mockApprovals, mockAuditEvents } from '@/data/mock'
+import type { ActionCard, ApprovalItem, AuditEvent, Project, EvidenceTab, MainView, RiskLevel } from '@/types'
+import { api } from '@/lib/api'
 
 interface AppState {
   theme: 'light' | 'dark'
@@ -19,10 +19,22 @@ interface AppState {
   evidenceTab: EvidenceTab
   setEvidenceTab: (tab: EvidenceTab) => void
 
+  // Data
   projects: Project[]
   actions: ActionCard[]
-  approvals: typeof mockApprovals
-  auditEvents: typeof mockAuditEvents
+  approvals: ApprovalItem[]
+  auditEvents: AuditEvent[]
+
+  // Async state
+  loading: boolean
+  error: string | null
+
+  // Load all data from API
+  loadData: () => Promise<void>
+
+  // Mutations that update local state after API calls
+  updateActionStatus: (id: string, status: string) => Promise<void>
+  resolveApproval: (id: string, status: string, resolvedBy?: string) => Promise<void>
 
   filterRisk: RiskLevel | null
   setFilterRisk: (r: RiskLevel | null) => void
@@ -37,7 +49,7 @@ interface AppState {
   setEvidenceRailOpen: (v: boolean) => void
 }
 
-export const useStore = create<AppState>((set) => ({
+export const useStore = create<AppState>((set, _get) => ({
   theme: 'light',
   setTheme: (theme) => {
     set({ theme })
@@ -64,10 +76,47 @@ export const useStore = create<AppState>((set) => ({
   evidenceTab: 'source',
   setEvidenceTab: (evidenceTab) => set({ evidenceTab }),
 
-  projects: mockProjects,
-  actions: mockActions,
-  approvals: mockApprovals,
-  auditEvents: mockAuditEvents,
+  projects: [],
+  actions: [],
+  approvals: [],
+  auditEvents: [],
+
+  loading: false,
+  error: null,
+
+  loadData: async () => {
+    set({ loading: true, error: null })
+    try {
+      const [projects, actions, approvals, auditEvents] = await Promise.all([
+        api.projects.list(),
+        api.actions.list(),
+        api.approvals.list(),
+        api.audit.list({ limit: 100 }),
+      ])
+      set({ projects, actions, approvals, auditEvents, loading: false })
+    } catch (err) {
+      set({ loading: false, error: err instanceof Error ? err.message : 'Failed to load data' })
+    }
+  },
+
+  updateActionStatus: async (id, status) => {
+    const updated = await api.actions.updateStatus(id, status)
+    set((s) => ({
+      actions: s.actions.map(a => a.id === id ? updated : a),
+    }))
+    // Refresh audit trail
+    api.audit.list({ limit: 100 }).then(auditEvents => set({ auditEvents })).catch(() => undefined)
+  },
+
+  resolveApproval: async (id, status, resolvedBy = 'primary-operator') => {
+    const updated = await api.approvals.resolve(id, status, resolvedBy)
+    set((s) => ({
+      approvals: s.approvals.map(a => a.id === id ? updated : a),
+    }))
+    // Refresh projects so badge counts update
+    api.projects.list().then(projects => set({ projects })).catch(() => undefined)
+    api.audit.list({ limit: 100 }).then(auditEvents => set({ auditEvents })).catch(() => undefined)
+  },
 
   filterRisk: null,
   setFilterRisk: (filterRisk) => set({ filterRisk }),

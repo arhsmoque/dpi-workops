@@ -77,77 +77,77 @@
   --risk-black-border: #D1D5DB;
 }
 
-/* ── Dark Mode ──────────────────────────────────────────────── */
+/* ── Dark Mode — neutral gray surfaces, no blue undertone ───── */
 :root[data-theme="dark"] {
-  /* Surfaces — deep executive navy-black */
-  --surface-canvas:  #08101E;
-  --surface-panel:   #0E1A2E;
-  --surface-card:    #132338;
-  --surface-elevated:#1A2F4A;
-  --surface-sidebar: #0C1525;
+  /* Surfaces — warm-neutral charcoal grays */
+  --surface-canvas:  #141414;
+  --surface-panel:   #1C1C1C;
+  --surface-card:    #242424;
+  --surface-elevated:#2E2E2E;
+  --surface-sidebar: #181818;
 
-  /* Text */
-  --text-primary:    #F2EDE4;
-  --text-secondary:  #B0A898;
-  --text-muted:      #6B7280;
-  --text-inverse:    #08101E;
-  --text-brand:      #D8E8F8;
-  --text-link:       #60AFEE;
+  /* Text — warm cream, not blue-white */
+  --text-primary:    #F0EBE3;
+  --text-secondary:  #A89F95;
+  --text-muted:      #6B6560;
+  --text-inverse:    #141414;
+  --text-brand:      #F0EBE3;
+  --text-link:       #E8B84B;
 
-  /* DPIK Brand — Navy & Gold on dark */
-  --brand-primary:   #D8E8F8;
-  --brand-mid:       #7BB4E0;
-  --brand-accent:    #E8B84B;   /* Gold brightened on dark */
+  /* DPIK Brand — gold leads on dark, navy stays as accent */
+  --brand-primary:   #F0EBE3;
+  --brand-mid:       #E8B84B;   /* Gold as primary interactive on dark */
+  --brand-accent:    #E8B84B;   /* Gold 400 — prestige on dark */
   --brand-gold-light:#F5CE72;
   --brand-gold-pale: #2A1F08;
-  --brand-ai:        #38BDF8;   /* Brighter AI on dark */
-  --brand-ai-pale:   #082030;
+  --brand-ai:        #38BDF8;   /* AI blue — unchanged */
+  --brand-ai-pale:   #0A1E2A;
   --brand-field:     #FBBF24;
 
-  /* Borders */
-  --border-subtle:   rgba(216,232,248,0.08);
-  --border-default:  rgba(216,232,248,0.13);
-  --border-strong:   rgba(216,232,248,0.22);
-  --border-active:   #7BB4E0;
+  /* Borders — subtle warm grays */
+  --border-subtle:   rgba(240,235,227,0.08);
+  --border-default:  rgba(240,235,227,0.13);
+  --border-strong:   rgba(240,235,227,0.22);
+  --border-active:   #E8B84B;
   --border-evidence: #E8B84B;
   --border-ai:       rgba(56,189,248,0.28);
 
-  /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.35);
-  --shadow-md:  0 6px 24px rgba(0,0,0,0.45);
-  --shadow-lg:  0 18px 48px rgba(0,0,0,0.55);
+  /* Shadows — deeper on gray */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.40);
+  --shadow-md:  0 6px 24px rgba(0,0,0,0.50);
+  --shadow-lg:  0 18px 48px rgba(0,0,0,0.60);
   --shadow-ai:  0 0 0 1px rgba(56,189,248,0.20), 0 4px 18px rgba(56,189,248,0.15);
-  --shadow-glass:0 20px 60px rgba(0,0,0,0.40);
+  --shadow-glass:0 20px 60px rgba(0,0,0,0.50);
 
   /* Glass */
-  --glass-bg:     rgba(13,26,46,0.86);
-  --glass-border: rgba(216,232,248,0.07);
+  --glass-bg:     rgba(28,28,28,0.88);
+  --glass-border: rgba(240,235,227,0.07);
 
-  /* Risk — Dark */
-  --risk-green-bg:     #064E3B;
-  --risk-green-text:   #A7F3D0;
+  /* Risk — Dark (desaturated to suit gray canvas) */
+  --risk-green-bg:     #0D2218;
+  --risk-green-text:   #6EE7B7;
   --risk-green-rail:   #34D399;
-  --risk-green-border: #065F46;
+  --risk-green-border: #1A4030;
 
-  --risk-blue-bg:      #082030;
+  --risk-blue-bg:      #0D1E2A;
   --risk-blue-text:    #BAE6FD;
   --risk-blue-rail:    #38BDF8;
-  --risk-blue-border:  #0C4A6E;
+  --risk-blue-border:  #142840;
 
-  --risk-amber-bg:     #2A1F08;
+  --risk-amber-bg:     #231808;
   --risk-amber-text:   #FDE68A;
   --risk-amber-rail:   #E8B84B;
-  --risk-amber-border: #78350F;
+  --risk-amber-border: #5C3A0A;
 
-  --risk-red-bg:       #2D0808;
+  --risk-red-bg:       #250A0A;
   --risk-red-text:     #FCA5A5;
   --risk-red-rail:     #EF4444;
-  --risk-red-border:   #7F1D1D;
+  --risk-red-border:   #5A1414;
 
-  --risk-black-bg:     #030712;
+  --risk-black-bg:     #0A0A0A;
   --risk-black-text:   #F9FAFB;
-  --risk-black-rail:   #E5E7EB;
-  --risk-black-border: #374151;
+  --risk-black-rail:   #D1D5DB;
+  --risk-black-border: #303030;
 }
 
 /* ── Risk context tokens (data-risk attribute) ──────────────── */
