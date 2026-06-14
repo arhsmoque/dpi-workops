@@ -49,9 +49,10 @@ function NavBar() {
             title={item.label}
             className="relative flex flex-col items-center gap-0.5 py-3 px-1 text-[9px] font-medium transition-colors"
             style={{
-              color: isActive ? 'var(--brand-accent)' : 'var(--text-muted)',
+              color: isActive ? 'var(--brand-mid)' : 'var(--text-muted)',
               background: isActive ? 'var(--surface-card)' : 'transparent',
-              borderRight: isActive ? '2px solid var(--brand-accent)' : '2px solid transparent',
+              borderRight: isActive ? '2px solid var(--brand-mid)' : '2px solid transparent',
+              fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
             }}
           >
             <Icon size={16} strokeWidth={isActive ? 2 : 1.5} />

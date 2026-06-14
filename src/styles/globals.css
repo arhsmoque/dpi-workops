@@ -10,8 +10,8 @@
   }
 
   html {
-    /* DM Sans as body — clean, executive modern */
-    font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+    /* Figtree — TUGAS body warmth */
+    font-family: 'Figtree', 'Segoe UI', system-ui, sans-serif;
     font-feature-settings: "tnum" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -25,17 +25,19 @@
     min-height: 100vh;
   }
 
-  /* Playfair Display for display headings — executive gravitas */
+  /* Playfair Display — executive display headings */
   h1, h2 {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    color: var(--text-brand);
   }
 
-  h3, h4, h5, h6 {
-    font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+  /* Atkinson Hyperlegible Next — TUGAS-grade label/heading precision */
+  h3, h4, h5, h6, label, th {
+    font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
   }
 
   code, pre, .font-mono {
@@ -49,29 +51,19 @@
   }
 
   ::selection {
-    background: var(--brand-accent);
-    color: var(--text-inverse);
+    background: var(--brand-mid);
+    color: #fff;
   }
 
-  ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--text-muted);
-  }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 }
 
 @layer components {
 
-  /* ── Action cards ────────────────────────────────────────────── */
+  /* ── Action cards ─────────────────────────────────────────── */
   .action-card {
     background: var(--surface-card);
     border: 1px solid var(--border-subtle);
@@ -84,17 +76,15 @@
   .action-card::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0; top: 0; bottom: 0;
     width: 3px;
-    background: var(--risk-rail, var(--border-subtle));
+    background: var(--risk-rail, var(--border-default));
     border-radius: 8px 0 0 8px;
   }
 
   .action-card:hover {
     box-shadow: var(--shadow-md);
-    border-color: var(--border-strong);
+    border-color: var(--border-default);
     transform: translateY(-1px);
   }
 
@@ -103,37 +93,37 @@
     box-shadow: var(--shadow-md);
   }
 
-  /* ── Evidence tabs ───────────────────────────────────────────── */
+  /* ── Evidence tabs ────────────────────────────────────────── */
   .evidence-tab {
     padding: 6px 12px;
     font-size: 12px;
     font-weight: 600;
+    font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
     color: var(--text-muted);
     border-bottom: 2px solid transparent;
     cursor: pointer;
+    letter-spacing: 0.01em;
     transition: color 0.15s, border-color 0.15s;
     white-space: nowrap;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.01em;
   }
 
   .evidence-tab.active {
-    color: var(--brand-accent);
-    border-bottom-color: var(--brand-accent);
+    color: var(--brand-mid);
+    border-bottom-color: var(--brand-mid);
   }
 
   .evidence-tab:hover:not(.active) {
     color: var(--text-secondary);
   }
 
-  /* ── Project lane cards ──────────────────────────────────────── */
+  /* ── Project lane cards ───────────────────────────────────── */
   .project-lane-card {
     padding: 10px 12px;
     border-radius: 8px;
     cursor: pointer;
     border-left: 3px solid transparent;
-    transition: background 0.14s ease, transform 0.1s ease;
     margin: 2px 6px;
+    transition: background 0.14s ease, transform 0.1s ease;
   }
 
   .project-lane-card:hover {
@@ -152,7 +142,7 @@
   .project-lane-card[data-risk="green"] { border-left-color: var(--risk-green-rail); }
   .project-lane-card[data-risk="black"] { border-left-color: var(--risk-black-rail); }
 
-  /* ── Glass card (homepage-inspired) ─────────────────────────── */
+  /* ── Glass card (Homestay-inspired) ──────────────────────── */
   .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(24px) saturate(130%);
@@ -162,42 +152,42 @@
     box-shadow: var(--shadow-glass);
   }
 
-  /* ── AI glow pulse — for AI Command button etc. ──────────────── */
+  /* ── AI glow ──────────────────────────────────────────────── */
   .ai-glow {
     box-shadow: var(--shadow-ai);
     border-color: var(--border-ai) !important;
   }
 
-  .ai-glow:hover {
-    box-shadow: 0 0 0 1px var(--brand-ai), 0 4px 24px rgba(14,165,233,0.22);
+  /* ── Gold progress bar (TUGAS-inspired) ──────────────────── */
+  .gold-bar {
+    height: 3px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--brand-mid) 0%, var(--brand-gold-light) 100%);
   }
 
-  /* ── Stat card (radar stats) ─────────────────────────────────── */
-  .stat-card {
-    background: var(--surface-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 10px;
-    padding: 14px;
-    transition: box-shadow 0.15s;
-  }
-
-  .stat-card:hover {
-    box-shadow: var(--shadow-sm);
-  }
-
-  /* ── Section headings with Playfair ─────────────────────────── */
+  /* ── Section display heading ──────────────────────────────── */
   .section-display {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     color: var(--text-brand);
+  }
+
+  /* ── Atkinson label ───────────────────────────────────────── */
+  .label-precise {
+    font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--text-muted);
   }
 }
 
-/* ── Keyframes ───────────────────────────────────────────────── */
+/* ── Keyframes ──────────────────────────────────────────────── */
 @keyframes ai-breathe {
-  0%, 100% { opacity: 0.6; }
-  50%       { opacity: 1;   }
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
 }
 
 @keyframes slide-in-right {
@@ -205,10 +195,17 @@
   to   { transform: translateX(0);   opacity: 1; }
 }
 
-.animate-ai-breathe {
-  animation: ai-breathe 3s ease-in-out infinite;
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,151,43,0.3); }
+  50%       { box-shadow: 0 0 0 4px rgba(201,151,43,0);  }
 }
 
-.animate-slide-in {
-  animation: slide-in-right 0.2s ease-out;
+.animate-ai-breathe  { animation: ai-breathe 3s ease-in-out infinite; }
+.animate-slide-in    { animation: slide-in-right 0.2s ease-out; }
+.animate-gold-pulse  { animation: gold-pulse 2.5s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ai-breathe,
+  .animate-slide-in,
+  .animate-gold-pulse { animation: none; }
 }

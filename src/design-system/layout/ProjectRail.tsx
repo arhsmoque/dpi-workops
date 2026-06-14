@@ -98,7 +98,10 @@ export function ProjectRail() {
       >
         <div className="flex items-center gap-1.5">
           <Activity size={13} style={{ color: 'var(--brand-accent)' }} />
-          <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
+          <span
+            className="text-xs font-semibold"
+            style={{ color: 'var(--text-primary)', fontFamily: '"Atkinson Hyperlegible Next", system-ui, sans-serif', letterSpacing: '0.01em' }}
+          >
             Projects
           </span>
         </div>
@@ -120,7 +123,7 @@ export function ProjectRail() {
         className={`text-left px-3 py-2 text-xs border-b transition-colors ${selectedProjectCode === null ? 'font-semibold' : ''}`}
         style={{
           borderColor: 'var(--border-subtle)',
-          color: selectedProjectCode === null ? 'var(--brand-accent)' : 'var(--text-muted)',
+          color: selectedProjectCode === null ? 'var(--brand-mid)' : 'var(--text-muted)',
           background: selectedProjectCode === null ? 'var(--surface-panel)' : 'transparent',
         }}
         onClick={() => setSelectedProject(null)}

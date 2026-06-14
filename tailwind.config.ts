@@ -30,7 +30,8 @@ export default {
       },
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
-        ui: ['"DM Sans"', '"Segoe UI"', 'system-ui', 'sans-serif'],
+        heading: ['"Atkinson Hyperlegible Next"', 'system-ui', 'sans-serif'],
+        ui: ['Figtree', '"Segoe UI"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'Consolas', 'monospace'],
       },
       boxShadow: {
