@@ -1,4 +1,4 @@
-import { Search, Bell, Settings, Sun, Moon, Wifi, Zap } from 'lucide-react'
+import { Search, Bell, Settings, Sun, Moon, Zap } from 'lucide-react'
 import { useStore } from '@/app/store'
 
 export function TopCommandBar() {
