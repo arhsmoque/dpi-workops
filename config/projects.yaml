@@ -1,0 +1,56 @@
+# DPI WorkOps — project registry
+# Source of truth for project-to-code mapping used by classifiers
+# Sprint 1: inbox-agent reads this to match emails to projects
+
+projects:
+  - code: P75
+    name: PAAB Machang Water Treatment
+    client: JPS Kelantan
+    email_keywords:
+      - PAAB
+      - Machang
+      - P75
+      - "water treatment"
+      - "rawatan air"
+    drive_folder_ids: []
+    active: true
+
+  - code: P89B
+    name: Jalan Semantan Upgrading
+    client: JKR Putrajaya
+    email_keywords:
+      - Semantan
+      - P89B
+      - "Package B"
+      - "JKR Putrajaya"
+    drive_folder_ids: []
+    active: true
+
+  - code: SSP2
+    name: SSP2 Design Package
+    client: Prasarana
+    email_keywords:
+      - SSP2
+      - Subang
+      - "Shah Alam Paramedic"
+      - Prasarana
+    drive_folder_ids: []
+    active: true
+
+  - code: M12
+    name: Miri Airport Expansion
+    client: MAHB
+    email_keywords:
+      - Miri
+      - M12
+      - MAHB
+      - "airport expansion"
+    drive_folder_ids: []
+    active: true
+
+  - code: INT
+    name: Internal / Admin
+    client: DPI
+    email_keywords: []
+    drive_folder_ids: []
+    active: true

@@ -4,3 +4,9 @@ dist
 .env.local
 .DS_Store
 *.log
+services/api/__pycache__
+services/api/app/**/__pycache__
+services/api/data/*.db
+services/api/.venv
+**/__pycache__
+*.pyc

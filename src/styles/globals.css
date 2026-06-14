@@ -10,7 +10,8 @@
   }
 
   html {
-    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    /* DM Sans as body — clean, executive modern */
+    font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
     font-feature-settings: "tnum" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -24,9 +25,17 @@
     min-height: 100vh;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter Tight', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  /* Playfair Display for display headings — executive gravitas */
+  h1, h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
     font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
   code, pre, .font-mono {
@@ -36,7 +45,7 @@
   :focus-visible {
     outline: 2px solid var(--border-active);
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 3px;
   }
 
   ::selection {
@@ -45,11 +54,11 @@
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--surface-panel);
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
     background: var(--border-strong);
@@ -61,13 +70,15 @@
 }
 
 @layer components {
+
+  /* ── Action cards ────────────────────────────────────────────── */
   .action-card {
     background: var(--surface-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 6px;
+    border-radius: 8px;
     position: relative;
     overflow: hidden;
-    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
   }
 
   .action-card::before {
@@ -76,14 +87,15 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 4px;
+    width: 3px;
     background: var(--risk-rail, var(--border-subtle));
-    border-radius: 6px 0 0 6px;
+    border-radius: 8px 0 0 8px;
   }
 
   .action-card:hover {
     box-shadow: var(--shadow-md);
     border-color: var(--border-strong);
+    transform: translateY(-1px);
   }
 
   .action-card.selected {
@@ -91,15 +103,18 @@
     box-shadow: var(--shadow-md);
   }
 
+  /* ── Evidence tabs ───────────────────────────────────────────── */
   .evidence-tab {
     padding: 6px 12px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-muted);
     border-bottom: 2px solid transparent;
     cursor: pointer;
     transition: color 0.15s, border-color 0.15s;
     white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.01em;
   }
 
   .evidence-tab.active {
@@ -111,35 +126,89 @@
     color: var(--text-secondary);
   }
 
+  /* ── Project lane cards ──────────────────────────────────────── */
   .project-lane-card {
     padding: 10px 12px;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     border-left: 3px solid transparent;
-    transition: background 0.12s;
+    transition: background 0.14s ease, transform 0.1s ease;
+    margin: 2px 6px;
   }
 
   .project-lane-card:hover {
     background: var(--surface-panel);
+    transform: translateX(1px);
   }
 
   .project-lane-card.selected {
     background: var(--surface-panel);
+    box-shadow: var(--shadow-sm);
   }
 
-  .project-lane-card[data-risk="red"] {
-    border-left-color: var(--risk-red-rail);
+  .project-lane-card[data-risk="red"]   { border-left-color: var(--risk-red-rail);   }
+  .project-lane-card[data-risk="amber"] { border-left-color: var(--risk-amber-rail); }
+  .project-lane-card[data-risk="blue"]  { border-left-color: var(--risk-blue-rail);  }
+  .project-lane-card[data-risk="green"] { border-left-color: var(--risk-green-rail); }
+  .project-lane-card[data-risk="black"] { border-left-color: var(--risk-black-rail); }
+
+  /* ── Glass card (homepage-inspired) ─────────────────────────── */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(130%);
+    -webkit-backdrop-filter: blur(24px) saturate(130%);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    box-shadow: var(--shadow-glass);
   }
-  .project-lane-card[data-risk="amber"] {
-    border-left-color: var(--risk-amber-rail);
+
+  /* ── AI glow pulse — for AI Command button etc. ──────────────── */
+  .ai-glow {
+    box-shadow: var(--shadow-ai);
+    border-color: var(--border-ai) !important;
   }
-  .project-lane-card[data-risk="blue"] {
-    border-left-color: var(--risk-blue-rail);
+
+  .ai-glow:hover {
+    box-shadow: 0 0 0 1px var(--brand-ai), 0 4px 24px rgba(14,165,233,0.22);
   }
-  .project-lane-card[data-risk="green"] {
-    border-left-color: var(--risk-green-rail);
+
+  /* ── Stat card (radar stats) ─────────────────────────────────── */
+  .stat-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 14px;
+    transition: box-shadow 0.15s;
   }
-  .project-lane-card[data-risk="black"] {
-    border-left-color: var(--risk-black-rail);
+
+  .stat-card:hover {
+    box-shadow: var(--shadow-sm);
   }
+
+  /* ── Section headings with Playfair ─────────────────────────── */
+  .section-display {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-brand);
+  }
+}
+
+/* ── Keyframes ───────────────────────────────────────────────── */
+@keyframes ai-breathe {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(8px); opacity: 0; }
+  to   { transform: translateX(0);   opacity: 1; }
+}
+
+.animate-ai-breathe {
+  animation: ai-breathe 3s ease-in-out infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.2s ease-out;
 }

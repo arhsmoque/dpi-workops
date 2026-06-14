@@ -29,8 +29,9 @@ export default {
         'risk-border': 'var(--risk-border)',
       },
       fontFamily: {
-        ui: ['Inter', 'Segoe UI', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        ui: ['"DM Sans"', '"Segoe UI"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'Consolas', 'monospace'],
       },
       boxShadow: {
         token: 'var(--shadow-sm)',

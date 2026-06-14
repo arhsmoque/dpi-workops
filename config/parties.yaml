@@ -1,0 +1,43 @@
+# DPI WorkOps — parties register
+# Used by party-role-resolver agent (Sprint 2+)
+
+parties:
+  - id: JPS-KTN
+    name: JPS Kelantan
+    type: client
+    projects: [P75]
+    email_domains: [jps.gov.my]
+    contact_name: null
+    contact_email: null
+
+  - id: JKR-PJY
+    name: JKR Putrajaya
+    type: client
+    projects: [P89B]
+    email_domains: [jkr.gov.my, pu.gov.my]
+    contact_name: null
+    contact_email: null
+
+  - id: PRASARANA
+    name: Prasarana Malaysia Berhad
+    type: client
+    projects: [SSP2]
+    email_domains: [prasarana.com.my]
+    contact_name: null
+    contact_email: null
+
+  - id: MAHB
+    name: Malaysia Airports Holdings Berhad
+    type: client
+    projects: [M12]
+    email_domains: [malaysiaairports.com.my]
+    contact_name: null
+    contact_email: null
+
+  - id: DPI
+    name: DPI (Internal)
+    type: internal
+    projects: [INT]
+    email_domains: [dpi.com.my]
+    contact_name: null
+    contact_email: null
