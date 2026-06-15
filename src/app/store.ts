@@ -47,6 +47,9 @@ interface AppState {
 
   evidenceRailOpen: boolean
   setEvidenceRailOpen: (v: boolean) => void
+
+  comfortMode: boolean
+  toggleComfortMode: () => void
 }
 
 export const useStore = create<AppState>((set, _get) => ({
@@ -129,6 +132,15 @@ export const useStore = create<AppState>((set, _get) => ({
 
   evidenceRailOpen: true,
   setEvidenceRailOpen: (evidenceRailOpen) => set({ evidenceRailOpen }),
+
+  comfortMode: false,
+  toggleComfortMode: () =>
+    set((s) => {
+      const next = !s.comfortMode
+      document.documentElement.setAttribute('data-density', next ? 'comfort' : 'compact')
+      localStorage.setItem('dpi-density', next ? 'comfort' : 'compact')
+      return { comfortMode: next }
+    }),
 }))
 
 export function initTheme() {
@@ -137,4 +149,9 @@ export function initTheme() {
   const theme = stored ?? system
   document.documentElement.setAttribute('data-theme', theme)
   useStore.setState({ theme })
+
+  const storedDensity = localStorage.getItem('dpi-density') as 'compact' | 'comfort' | null
+  const density = storedDensity ?? 'compact'
+  document.documentElement.setAttribute('data-density', density)
+  useStore.setState({ comfortMode: density === 'comfort' })
 }
