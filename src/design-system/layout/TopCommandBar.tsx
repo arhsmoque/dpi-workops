@@ -1,8 +1,8 @@
-import { Search, Bell, Settings, Sun, Moon, Zap, ExternalLink, Menu } from 'lucide-react'
+import { Search, Bell, Settings, Sun, Moon, Zap, ExternalLink, Menu, LayoutList, LayoutDashboard } from 'lucide-react'
 import { useStore } from '@/app/store'
 
 export function TopCommandBar() {
-  const { theme, toggleTheme, searchQuery, setSearchQuery, actions, setMobileProjectDrawerOpen } = useStore()
+  const { theme, toggleTheme, searchQuery, setSearchQuery, actions, setMobileProjectDrawerOpen, comfortMode, toggleComfortMode } = useStore()
 
   const urgentCount = actions.filter(a => a.risk === 'red' && a.status === 'pending-review').length
   const pendingApprovals = actions.filter(a => a.status === 'pending-approval').length
@@ -195,6 +195,33 @@ export function TopCommandBar() {
             {urgentCount + pendingApprovals}
           </span>
         )}
+      </button>
+
+      {/* Density toggle — compact / comfort */}
+      <button
+        onClick={toggleComfortMode}
+        title={comfortMode ? 'Switch to Compact' : 'Switch to Comfort'}
+        className="shrink-0 flex items-center gap-1.5 rounded-lg transition-all"
+        style={{
+          padding: '5px 10px',
+          background: comfortMode ? 'rgba(201,151,43,0.14)' : 'rgba(255,255,255,0.08)',
+          border: comfortMode ? '1px solid rgba(201,151,43,0.36)' : '1px solid rgba(255,255,255,0.12)',
+          color: comfortMode ? 'rgba(232,184,75,0.95)' : 'rgba(255,255,255,0.70)',
+          fontFamily: '"DM Sans", system-ui, sans-serif',
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: '0.02em',
+          cursor: 'pointer',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.background = comfortMode ? 'rgba(201,151,43,0.22)' : 'rgba(255,255,255,0.14)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.background = comfortMode ? 'rgba(201,151,43,0.14)' : 'rgba(255,255,255,0.08)'
+        }}
+      >
+        {comfortMode ? <LayoutDashboard size={13} /> : <LayoutList size={13} />}
+        <span className="hidden sm:inline">{comfortMode ? 'Comfort' : 'Compact'}</span>
       </button>
 
       {/* Theme toggle — pill with label */}

@@ -1,4 +1,4 @@
-import { Bot, CheckCircle2, Clock, Link2, X } from 'lucide-react'
+import { Bot, CheckCircle2, Clock, X } from 'lucide-react'
 import { useStore } from '@/app/store'
 import { SourceChip } from '@/design-system/primitives/SourceChip'
 import { RiskBadge } from '@/design-system/primitives/Badge'
@@ -17,232 +17,241 @@ export function EvidenceRailShell() {
   const { actions, selectedActionId, setSelectedAction, evidenceTab, setEvidenceTab, auditEvents, approvals } = useStore()
 
   const action = actions.find(a => a.id === selectedActionId)
+  const isOpen = !!action
 
-  if (!action) {
-    return (
-      <aside
-        className="hidden md:flex flex-col border-l items-center justify-center"
-        style={{ width: 360, minWidth: 280, background: 'var(--surface-panel)', borderColor: 'var(--border-subtle)' }}
-      >
-        <div className="text-center px-6">
-          <Link2 size={28} className="mx-auto mb-3 opacity-20" style={{ color: 'var(--text-muted)' }} />
-          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-            Select an action card to view source evidence, AI reasoning, and approval status.
-          </p>
-        </div>
-      </aside>
-    )
-  }
-
-  const relatedAudit = auditEvents.filter(e => e.projectCode === action.projectCode).slice(0, 4)
-  const relatedApproval = approvals.find(ap => ap.actionId === action.id)
+  const relatedAudit = action ? auditEvents.filter(e => e.projectCode === action.projectCode).slice(0, 4) : []
+  const relatedApproval = action ? approvals.find(ap => ap.actionId === action.id) : undefined
 
   return (
     <>
-      {/* Mobile: backdrop closes sheet */}
-      <div
-        className="md:hidden fixed inset-0 bg-black/50 z-40"
-        onClick={() => setSelectedAction(null)}
-      />
+      {/* Mobile: backdrop when open */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setSelectedAction(null)}
+        />
+      )}
 
-      {/* Evidence panel — desktop: right column, mobile: bottom sheet */}
+      {/* Evidence panel:
+          Mobile: hidden when closed, fixed bottom sheet when open
+          Desktop: always rendered, animated collapsible width */}
       <aside
-        className="
-          animate-slide-up
-          fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t rounded-t-2xl max-h-[85vh]
-          md:animate-none md:relative md:z-auto md:border-t-0 md:border-l md:rounded-none md:max-h-none
-          md:w-[360px] md:min-w-[280px]
-          overflow-hidden
-        "
-        style={{ background: 'var(--surface-panel)', borderColor: 'var(--border-subtle)' }}
+        className={`
+          flex flex-col overflow-hidden shrink-0
+          ${isOpen
+            ? 'fixed bottom-0 left-0 right-0 z-50 border-t rounded-t-2xl max-h-[85vh] animate-slide-up'
+            : 'hidden'
+          }
+          md:static md:animate-none md:flex md:border-t-0 md:border-l md:rounded-none md:max-h-none
+          md:bottom-auto md:left-auto md:right-auto md:z-auto
+        `}
+        style={{
+          background: 'var(--surface-panel)',
+          borderColor: isOpen ? 'var(--border-subtle)' : 'transparent',
+          width: isOpen ? 360 : 0,
+          minWidth: 0,
+          transition: 'width 0.22s cubic-bezier(0.4,0,0.2,1)',
+        }}
       >
         {/* Mobile drag handle */}
-        <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
-          <div className="w-9 h-1 rounded-full" style={{ background: 'var(--border-default)' }} />
-        </div>
+        {isOpen && (
+          <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
+            <div className="w-9 h-1 rounded-full" style={{ background: 'var(--border-default)' }} />
+          </div>
+        )}
 
-      {/* Rail header */}
+        {/* Fixed-width inner box — prevents content squish during desktop width animation */}
       <div
-        className="flex items-center justify-between px-3 py-2 border-b shrink-0"
-        style={{ borderColor: 'var(--border-subtle)' }}
+        className="flex flex-col overflow-hidden flex-1 w-full md:w-[360px] md:min-w-[360px]"
+        style={{
+          animation: isOpen ? 'evidence-rail-in 0.22s ease-out' : undefined,
+        }}
       >
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
-            {action.projectCode} · {action.actionType}
-          </span>
-        </div>
-        <button
-          onClick={() => setSelectedAction(null)}
-          className="p-1 rounded hover:bg-[var(--surface-card)]"
-          style={{ color: 'var(--text-muted)' }}
-        >
-          <X size={13} />
-        </button>
-      </div>
-
-      {/* Tabs */}
-      <div className="flex border-b shrink-0 overflow-x-auto" style={{ borderColor: 'var(--border-subtle)' }}>
-        {TABS.map(tab => (
-          <button
-            key={tab.id}
-            className={`evidence-tab ${evidenceTab === tab.id ? 'active' : ''}`}
-            onClick={() => setEvidenceTab(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-3">
-        {evidenceTab === 'source' && (
-          <div className="space-y-4">
-            <section>
-              <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>
-                Source Evidence
-              </h4>
-              <div className="space-y-2">
-                {action.sourceItems.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between p-2 rounded border"
-                    style={{
-                      background: 'var(--surface-card)',
-                      borderColor: i === 0 ? 'var(--border-evidence)' : 'var(--border-subtle)',
-                    }}
-                  >
-                    <SourceChip item={item} primary={i === 0} />
-                    <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{item.type}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-            {action.missingInfo && action.missingInfo.length > 0 && (
-              <section>
-                <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--risk-amber-text)' }}>
-                  Missing Information
-                </h4>
-                <ul className="space-y-1">
-                  {action.missingInfo.map((m, i) => (
-                    <li key={i} className="flex items-start gap-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                      <span className="mt-0.5 shrink-0 text-[var(--risk-amber-rail)]">·</span>
-                      {m}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </div>
-        )}
-
-        {evidenceTab === 'ai-why' && (
-          <div className="space-y-3">
+        {action && (
+          <>
+            {/* Rail header */}
             <div
-              className="p-3 rounded border"
-              style={{ background: 'var(--surface-card)', borderColor: 'var(--border-subtle)' }}
+              className="flex items-center justify-between px-3 py-2 border-b shrink-0"
+              style={{ borderColor: 'var(--border-subtle)' }}
             >
-              <div className="flex items-center gap-1.5 mb-2">
-                <Bot size={13} style={{ color: 'var(--brand-accent)' }} />
-                <span className="text-[10px] font-semibold" style={{ color: 'var(--brand-accent)' }}>AI Suggestion</span>
-                {action.aiGenerated && (
-                  <span className="text-[9px] px-1 rounded" style={{ background: 'var(--surface-panel)', color: 'var(--text-muted)' }}>
-                    AI-generated
-                  </span>
-                )}
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+                  {action.projectCode} · {action.actionType}
+                </span>
               </div>
-              <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--text-primary)' }}>
-                {action.summary}
-              </p>
-              <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                <strong>Why:</strong> {action.aiReason}
-              </p>
-            </div>
-            <div>
-              <RiskBadge risk={action.risk} showMeaning />
-            </div>
-            <div className="p-2 rounded text-[11px]" style={{ background: 'var(--surface-card)', borderLeft: '3px solid var(--border-evidence)', color: 'var(--text-secondary)' }}>
-              <strong style={{ color: 'var(--brand-heritage)' }}>Authority:</strong> {action.authorityText}
-            </div>
-          </div>
-        )}
-
-        {evidenceTab === 'approval' && (
-          <div className="space-y-3">
-            {relatedApproval ? (
-              <>
-                <div
-                  data-risk={relatedApproval.risk}
-                  className="p-3 rounded border"
-                  style={{ background: 'var(--risk-bg)', borderColor: 'var(--risk-border)' }}
-                >
-                  <p className="text-[10px] font-semibold mb-1" style={{ color: 'var(--risk-text)' }}>
-                    PROPOSED ACTION
-                  </p>
-                  <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--text-primary)' }}>
-                    {relatedApproval.proposedAction}
-                  </p>
-                  <p className="text-[11px]" style={{ color: 'var(--risk-text)' }}>
-                    <strong>Consequence:</strong> {relatedApproval.consequence}
-                  </p>
-                </div>
-                <div className="text-xs p-2 rounded" style={{ background: 'var(--surface-card)', color: 'var(--text-muted)', border: '1px solid var(--border-subtle)' }}>
-                  Mode: <strong>{relatedApproval.allowedMode}</strong>
-                </div>
-                <div className="flex gap-2">
-                  <Button variant="primary" size="sm">Approve</Button>
-                  <Button variant="ghost" size="sm">Reject</Button>
-                  <Button variant="ghost" size="sm">Snooze</Button>
-                </div>
-              </>
-            ) : (
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                No approval gate open for this action.
-              </p>
-            )}
-          </div>
-        )}
-
-        {evidenceTab === 'audit' && (
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>
-              Recent Audit — {action.projectCode}
-            </h4>
-            {relatedAudit.map(ev => (
-              <div
-                key={ev.id}
-                className="flex gap-2 pb-2 border-b"
-                style={{ borderColor: 'var(--border-subtle)' }}
+              <button
+                onClick={() => setSelectedAction(null)}
+                className="p-1 rounded hover:bg-[var(--surface-card)]"
+                style={{ color: 'var(--text-muted)' }}
               >
-                <div className="mt-0.5 shrink-0">
-                  <Clock size={11} style={{ color: 'var(--text-muted)' }} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-medium" style={{ color: 'var(--text-primary)' }}>{ev.event}</p>
-                  <p className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>{ev.detail}</p>
-                  <p className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>
-                    {new Date(ev.timestamp).toLocaleString()} · {ev.actor}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {evidenceTab === 'related' && (
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>
-              Related Actions — {action.projectCode}
-            </h4>
-            {/* Related actions from same project */}
-            {/* This would use store state in production */}
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              Related item linking requires backend integration.
-            </p>
-            <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
-              <CheckCircle2 size={11} style={{ color: 'var(--risk-green-rail)' }} />
-              Evidence chain maintained in audit ledger.
+                <X size={13} />
+              </button>
             </div>
-          </div>
+
+            {/* Tabs */}
+            <div className="flex border-b shrink-0 overflow-x-auto" style={{ borderColor: 'var(--border-subtle)' }}>
+              {TABS.map(tab => (
+                <button
+                  key={tab.id}
+                  className={`evidence-tab ${evidenceTab === tab.id ? 'active' : ''}`}
+                  onClick={() => setEvidenceTab(tab.id)}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-3">
+              {evidenceTab === 'source' && (
+                <div className="space-y-4">
+                  <section>
+                    <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>
+                      Source Evidence
+                    </h4>
+                    <div className="space-y-2">
+                      {action.sourceItems.map((item, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center justify-between p-2 rounded border"
+                          style={{
+                            background: 'var(--surface-card)',
+                            borderColor: i === 0 ? 'var(--border-evidence)' : 'var(--border-subtle)',
+                          }}
+                        >
+                          <SourceChip item={item} primary={i === 0} />
+                          <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{item.type}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                  {action.missingInfo && action.missingInfo.length > 0 && (
+                    <section>
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--risk-amber-text)' }}>
+                        Missing Information
+                      </h4>
+                      <ul className="space-y-1">
+                        {action.missingInfo.map((m, i) => (
+                          <li key={i} className="flex items-start gap-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                            <span className="mt-0.5 shrink-0 text-[var(--risk-amber-rail)]">·</span>
+                            {m}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
+                </div>
+              )}
+
+              {evidenceTab === 'ai-why' && (
+                <div className="space-y-3">
+                  <div
+                    className="p-3 rounded border"
+                    style={{ background: 'var(--surface-card)', borderColor: 'var(--border-subtle)' }}
+                  >
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <Bot size={13} style={{ color: 'var(--brand-accent)' }} />
+                      <span className="text-[10px] font-semibold" style={{ color: 'var(--brand-accent)' }}>AI Suggestion</span>
+                      {action.aiGenerated && (
+                        <span className="text-[9px] px-1 rounded" style={{ background: 'var(--surface-panel)', color: 'var(--text-muted)' }}>
+                          AI-generated
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--text-primary)' }}>
+                      {action.summary}
+                    </p>
+                    <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                      <strong>Why:</strong> {action.aiReason}
+                    </p>
+                  </div>
+                  <div>
+                    <RiskBadge risk={action.risk} showMeaning />
+                  </div>
+                  <div className="p-2 rounded text-[11px]" style={{ background: 'var(--surface-card)', borderLeft: '3px solid var(--border-evidence)', color: 'var(--text-secondary)' }}>
+                    <strong style={{ color: 'var(--brand-accent)' }}>Authority:</strong> {action.authorityText}
+                  </div>
+                </div>
+              )}
+
+              {evidenceTab === 'approval' && (
+                <div className="space-y-3">
+                  {relatedApproval ? (
+                    <>
+                      <div
+                        data-risk={relatedApproval.risk}
+                        className="p-3 rounded border"
+                        style={{ background: 'var(--risk-bg)', borderColor: 'var(--risk-border)' }}
+                      >
+                        <p className="text-[10px] font-semibold mb-1" style={{ color: 'var(--risk-text)' }}>
+                          PROPOSED ACTION
+                        </p>
+                        <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--text-primary)' }}>
+                          {relatedApproval.proposedAction}
+                        </p>
+                        <p className="text-[11px]" style={{ color: 'var(--risk-text)' }}>
+                          <strong>Consequence:</strong> {relatedApproval.consequence}
+                        </p>
+                      </div>
+                      <div className="text-xs p-2 rounded" style={{ background: 'var(--surface-card)', color: 'var(--text-muted)', border: '1px solid var(--border-subtle)' }}>
+                        Mode: <strong>{relatedApproval.allowedMode}</strong>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="primary" size="sm">Approve</Button>
+                        <Button variant="ghost" size="sm">Reject</Button>
+                        <Button variant="ghost" size="sm">Snooze</Button>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      No approval gate open for this action.
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {evidenceTab === 'audit' && (
+                <div className="space-y-2">
+                  <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>
+                    Recent Audit — {action.projectCode}
+                  </h4>
+                  {relatedAudit.map(ev => (
+                    <div
+                      key={ev.id}
+                      className="flex gap-2 pb-2 border-b"
+                      style={{ borderColor: 'var(--border-subtle)' }}
+                    >
+                      <div className="mt-0.5 shrink-0">
+                        <Clock size={11} style={{ color: 'var(--text-muted)' }} />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-medium" style={{ color: 'var(--text-primary)' }}>{ev.event}</p>
+                        <p className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>{ev.detail}</p>
+                        <p className="text-[9px] font-mono" style={{ color: 'var(--text-muted)' }}>
+                          {new Date(ev.timestamp).toLocaleString()} · {ev.actor}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {evidenceTab === 'related' && (
+                <div className="space-y-2">
+                  <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>
+                    Related Actions — {action.projectCode}
+                  </h4>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                    Related item linking requires backend integration.
+                  </p>
+                  <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                    <CheckCircle2 size={11} style={{ color: 'var(--risk-green-rail)' }} />
+                    Evidence chain maintained in audit ledger.
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
         )}
       </div>
       </aside>
