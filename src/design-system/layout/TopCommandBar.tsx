@@ -1,8 +1,8 @@
-import { Search, Bell, Settings, Sun, Moon, Zap, ExternalLink } from 'lucide-react'
+import { Search, Bell, Settings, Sun, Moon, Zap, ExternalLink, Menu } from 'lucide-react'
 import { useStore } from '@/app/store'
 
 export function TopCommandBar() {
-  const { theme, toggleTheme, searchQuery, setSearchQuery, actions } = useStore()
+  const { theme, toggleTheme, searchQuery, setSearchQuery, actions, setMobileProjectDrawerOpen } = useStore()
 
   const urgentCount = actions.filter(a => a.risk === 'red' && a.status === 'pending-review').length
   const pendingApprovals = actions.filter(a => a.status === 'pending-approval').length
@@ -16,6 +16,18 @@ export function TopCommandBar() {
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}
     >
+      {/* Mobile: hamburger opens project rail drawer */}
+      <button
+        className="md:hidden shrink-0 p-1.5 rounded-lg mr-0.5"
+        style={{ color: 'rgba(255,255,255,0.75)' }}
+        onClick={() => setMobileProjectDrawerOpen(true)}
+        aria-label="Open projects"
+        onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.10)'}
+        onMouseLeave={e => e.currentTarget.style.background = ''}
+      >
+        <Menu size={18} />
+      </button>
+
       {/* DPIK brand — logo + app name */}
       <div className="flex items-center gap-2.5 shrink-0 select-none">
         <img

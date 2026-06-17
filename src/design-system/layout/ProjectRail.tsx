@@ -70,7 +70,7 @@ function ProjectCard({ project, selected, onClick }: { project: Project; selecte
   )
 }
 
-export function ProjectRail() {
+export function ProjectRail({ mobileMode = false }: { mobileMode?: boolean }) {
   const { projects, selectedProjectCode, setSelectedProject, actions } = useStore()
 
   const sortedProjects = [...projects].sort((a, b) => {
@@ -82,8 +82,12 @@ export function ProjectRail() {
 
   return (
     <aside
-      className="flex flex-col border-r overflow-hidden"
-      style={{
+      className={`${mobileMode ? 'flex' : 'hidden md:flex'} flex-col border-r overflow-hidden`}
+      style={mobileMode ? {
+        flex: 1,
+        background: 'var(--surface-canvas)',
+        borderColor: 'var(--border-subtle)',
+      } : {
         width: 280,
         minWidth: 220,
         maxWidth: 320,

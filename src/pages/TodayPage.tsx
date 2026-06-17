@@ -72,7 +72,7 @@ export function TodayPage() {
 
       {/* Radar stats */}
       <div
-        className="grid grid-cols-4 gap-3 px-5 py-3 border-b shrink-0"
+        className="grid grid-cols-2 md:grid-cols-4 gap-3 px-5 py-3 border-b shrink-0"
         style={{ borderColor: 'var(--border-subtle)' }}
       >
         <RadarStat

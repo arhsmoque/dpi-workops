@@ -21,7 +21,7 @@ export function EvidenceRailShell() {
   if (!action) {
     return (
       <aside
-        className="flex flex-col border-l items-center justify-center"
+        className="hidden md:flex flex-col border-l items-center justify-center"
         style={{ width: 360, minWidth: 280, background: 'var(--surface-panel)', borderColor: 'var(--border-subtle)' }}
       >
         <div className="text-center px-6">
@@ -38,10 +38,29 @@ export function EvidenceRailShell() {
   const relatedApproval = approvals.find(ap => ap.actionId === action.id)
 
   return (
-    <aside
-      className="flex flex-col border-l overflow-hidden"
-      style={{ width: 360, minWidth: 280, background: 'var(--surface-panel)', borderColor: 'var(--border-subtle)' }}
-    >
+    <>
+      {/* Mobile: backdrop closes sheet */}
+      <div
+        className="md:hidden fixed inset-0 bg-black/50 z-40"
+        onClick={() => setSelectedAction(null)}
+      />
+
+      {/* Evidence panel — desktop: right column, mobile: bottom sheet */}
+      <aside
+        className="
+          animate-slide-up
+          fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t rounded-t-2xl max-h-[85vh]
+          md:animate-none md:relative md:z-auto md:border-t-0 md:border-l md:rounded-none md:max-h-none
+          md:w-[360px] md:min-w-[280px]
+          overflow-hidden
+        "
+        style={{ background: 'var(--surface-panel)', borderColor: 'var(--border-subtle)' }}
+      >
+        {/* Mobile drag handle */}
+        <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
+          <div className="w-9 h-1 rounded-full" style={{ background: 'var(--border-default)' }} />
+        </div>
+
       {/* Rail header */}
       <div
         className="flex items-center justify-between px-3 py-2 border-b shrink-0"
@@ -226,6 +245,7 @@ export function EvidenceRailShell() {
           </div>
         )}
       </div>
-    </aside>
+      </aside>
+    </>
   )
 }
