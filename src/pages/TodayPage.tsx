@@ -70,9 +70,9 @@ export function TodayPage() {
         </div>
       </div>
 
-      {/* Radar stats */}
+      {/* Radar stats — hidden in comfort mode via CSS */}
       <div
-        className="grid grid-cols-4 gap-3 px-5 py-3 border-b shrink-0"
+        className="radar-stats grid grid-cols-4 gap-3 px-5 py-3 border-b shrink-0"
         style={{ borderColor: 'var(--border-subtle)' }}
       >
         <RadarStat

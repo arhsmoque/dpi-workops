@@ -57,7 +57,7 @@ export function ActionCard({ action, selected, onClick }: ActionCardProps) {
       </h3>
 
       {/* Sources */}
-      <div className="flex items-center gap-1 flex-wrap mb-2">
+      <div className="action-card-sources flex items-center gap-1 flex-wrap mb-2">
         {action.sourceItems.map((item, i) => (
           <SourceChip key={i} item={item} primary={i === 0} />
         ))}
@@ -90,7 +90,7 @@ export function ActionCard({ action, selected, onClick }: ActionCardProps) {
       </div>
 
       {/* Authority text */}
-      <p className="text-[10px] mt-1.5 font-medium" style={{ color: 'var(--risk-rail)' }}>
+      <p className="action-card-authority text-[10px] mt-1.5 font-medium" style={{ color: 'var(--risk-rail)' }}>
         {action.authorityText}
       </p>
 
