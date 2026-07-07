@@ -48,6 +48,9 @@ interface AppState {
   evidenceRailOpen: boolean
   setEvidenceRailOpen: (v: boolean) => void
 
+  mobileProjectDrawerOpen: boolean
+  setMobileProjectDrawerOpen: (v: boolean) => void
+
   comfortMode: boolean
   toggleComfortMode: () => void
 }
@@ -132,6 +135,9 @@ export const useStore = create<AppState>((set, _get) => ({
 
   evidenceRailOpen: true,
   setEvidenceRailOpen: (evidenceRailOpen) => set({ evidenceRailOpen }),
+
+  mobileProjectDrawerOpen: false,
+  setMobileProjectDrawerOpen: (mobileProjectDrawerOpen) => set({ mobileProjectDrawerOpen }),
 
   comfortMode: false,
   toggleComfortMode: () =>

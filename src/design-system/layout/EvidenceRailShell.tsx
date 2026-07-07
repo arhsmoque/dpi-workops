@@ -23,24 +23,47 @@ export function EvidenceRailShell() {
   const relatedApproval = action ? approvals.find(ap => ap.actionId === action.id) : undefined
 
   return (
-    <aside
-      className="flex flex-col border-l overflow-hidden shrink-0"
-      style={{
-        width: isOpen ? 360 : 0,
-        minWidth: 0,
-        background: 'var(--surface-panel)',
-        borderColor: isOpen ? 'var(--border-subtle)' : 'transparent',
-        transition: 'width 0.22s cubic-bezier(0.4,0,0.2,1)',
-      }}
-    >
-      {/* Fixed-width inner box so content doesn't squish during animation */}
-      <div
+    <>
+      {/* Mobile: backdrop when open */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setSelectedAction(null)}
+        />
+      )}
+
+      {/* Evidence panel:
+          Mobile: hidden when closed, fixed bottom sheet when open
+          Desktop: always rendered, animated collapsible width */}
+      <aside
+        className={`
+          flex flex-col overflow-hidden shrink-0
+          ${isOpen
+            ? 'fixed bottom-0 left-0 right-0 z-50 border-t rounded-t-2xl max-h-[85vh] animate-slide-up'
+            : 'hidden'
+          }
+          md:static md:animate-none md:flex md:border-t-0 md:border-l md:rounded-none md:max-h-none
+          md:bottom-auto md:left-auto md:right-auto md:z-auto
+        `}
         style={{
-          width: 360,
-          minWidth: 360,
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
+          background: 'var(--surface-panel)',
+          borderColor: isOpen ? 'var(--border-subtle)' : 'transparent',
+          width: isOpen ? 360 : 0,
+          minWidth: 0,
+          transition: 'width 0.22s cubic-bezier(0.4,0,0.2,1)',
+        }}
+      >
+        {/* Mobile drag handle */}
+        {isOpen && (
+          <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
+            <div className="w-9 h-1 rounded-full" style={{ background: 'var(--border-default)' }} />
+          </div>
+        )}
+
+        {/* Fixed-width inner box — prevents content squish during desktop width animation */}
+      <div
+        className="flex flex-col overflow-hidden flex-1 w-full md:w-[360px] md:min-w-[360px]"
+        style={{
           animation: isOpen ? 'evidence-rail-in 0.22s ease-out' : undefined,
         }}
       >
@@ -231,6 +254,7 @@ export function EvidenceRailShell() {
           </>
         )}
       </div>
-    </aside>
+      </aside>
+    </>
   )
 }

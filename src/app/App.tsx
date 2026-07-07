@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Radar, List, Edit3, FileStack, Shield, Settings, ShieldCheck } from 'lucide-react'
+import { Radar, List, Edit3, FileStack, Shield, Settings, ShieldCheck, X } from 'lucide-react'
 import { useStore } from './store'
 import { TopCommandBar } from '@/design-system/layout/TopCommandBar'
 import { ProjectRail } from '@/design-system/layout/ProjectRail'
@@ -12,11 +12,19 @@ import { AuditPage } from '@/pages/AuditPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import type { MainView } from '@/types'
 
-const NAV_ITEMS: { id: MainView; label: string; icon: React.ElementType; badge?: string }[] = [
+const NAV_ITEMS: { id: MainView; label: string; icon: React.ElementType }[] = [
   { id: 'today', label: 'Today', icon: Radar },
   { id: 'actions', label: 'Actions', icon: List },
   { id: 'drafts', label: 'Drafts', icon: Edit3 },
   { id: 'submissions', label: 'Submissions', icon: FileStack },
+  { id: 'audit', label: 'Audit', icon: Shield },
+  { id: 'settings', label: 'Settings', icon: Settings },
+]
+
+const MOBILE_NAV_ITEMS: { id: MainView; label: string; icon: React.ElementType }[] = [
+  { id: 'today', label: 'Today', icon: Radar },
+  { id: 'actions', label: 'Actions', icon: List },
+  { id: 'submissions', label: 'Approve', icon: ShieldCheck },
   { id: 'audit', label: 'Audit', icon: Shield },
   { id: 'settings', label: 'Settings', icon: Settings },
 ]
@@ -29,7 +37,7 @@ function NavBar() {
 
   return (
     <nav
-      className="flex flex-col border-r shrink-0"
+      className="hidden md:flex flex-col border-r shrink-0"
       style={{
         width: 52,
         background: 'var(--surface-panel)',
@@ -94,6 +102,116 @@ function NavBar() {
   )
 }
 
+function MobileBottomNav() {
+  const { activeView, setActiveView, actions, approvals } = useStore()
+
+  const pendingApprovals = approvals.filter(a => a.status === 'pending').length
+  const redCount = actions.filter(a => a.risk === 'red').length
+
+  return (
+    <nav
+      className="md:hidden fixed bottom-0 left-0 right-0 z-30 flex border-t"
+      style={{
+        background: 'var(--surface-panel)',
+        borderColor: 'var(--border-subtle)',
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+      }}
+    >
+      {MOBILE_NAV_ITEMS.map(item => {
+        const Icon = item.icon
+        const isActive = activeView === item.id
+        const badge =
+          item.id === 'today' && redCount > 0 ? redCount :
+          item.id === 'actions' && redCount > 0 ? redCount :
+          item.id === 'submissions' && pendingApprovals > 0 ? pendingApprovals : null
+
+        return (
+          <button
+            key={item.id}
+            onClick={() => setActiveView(item.id)}
+            className="relative flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium transition-colors"
+            style={{
+              color: isActive ? 'var(--brand-mid)' : 'var(--text-muted)',
+              fontFamily: '"DM Sans", system-ui, sans-serif',
+            }}
+          >
+            <div className="relative">
+              <Icon size={19} strokeWidth={isActive ? 2 : 1.5} />
+              {badge && (
+                <span
+                  className="absolute -top-1 -right-1.5 w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] font-bold"
+                  style={{ background: 'var(--risk-red-rail)', color: 'white' }}
+                >
+                  {badge}
+                </span>
+              )}
+            </div>
+            <span className="leading-tight">{item.label}</span>
+          </button>
+        )
+      })}
+    </nav>
+  )
+}
+
+function MobileProjectDrawer() {
+  const { mobileProjectDrawerOpen, setMobileProjectDrawerOpen } = useStore()
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className={`md:hidden fixed inset-0 bg-black/50 z-50 transition-opacity duration-300 ${
+          mobileProjectDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setMobileProjectDrawerOpen(false)}
+      />
+
+      {/* Drawer */}
+      <div
+        className={`md:hidden fixed top-0 left-0 bottom-0 z-[60] flex flex-col transition-transform duration-300 ease-out ${
+          mobileProjectDrawerOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        style={{
+          width: 300,
+          background: 'var(--surface-canvas)',
+          borderRight: '1px solid var(--border-subtle)',
+        }}
+      >
+        {/* Drawer header matches TopCommandBar height */}
+        <div
+          className="flex items-center justify-between px-4 shrink-0"
+          style={{
+            height: 52,
+            background: 'var(--brand-primary)',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+          }}
+        >
+          <span style={{
+            color: '#fff',
+            fontFamily: '"Playfair Display", Georgia, serif',
+            fontWeight: 700,
+            fontSize: 14,
+          }}>
+            Projects
+          </span>
+          <button
+            onClick={() => setMobileProjectDrawerOpen(false)}
+            className="p-1.5 rounded-lg"
+            style={{ color: 'rgba(255,255,255,0.70)' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.10)'}
+            onMouseLeave={e => e.currentTarget.style.background = ''}
+          >
+            <X size={16} />
+          </button>
+        </div>
+
+        <ProjectRail mobileMode />
+      </div>
+    </>
+  )
+}
+
 function MainContent() {
   const { activeView } = useStore()
   switch (activeView) {
@@ -129,7 +247,7 @@ export function App() {
     >
       <TopCommandBar />
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden min-h-0">
         <NavBar />
         <ProjectRail />
 
@@ -138,11 +256,11 @@ export function App() {
           className="flex-1 overflow-hidden"
           style={{ background: 'var(--surface-canvas)', position: 'relative' }}
         >
-          {/* Translucent DPIK logo — Homestay hero bg style */}
           <div className="logo-watermark" aria-hidden="true">
             <img src="/logo-dpik.png" alt="" draggable={false} />
           </div>
-          <div className="content-above-watermark h-full overflow-hidden">
+          {/* pb-16 md:pb-0 clears the fixed mobile bottom nav */}
+          <div className="content-above-watermark h-full overflow-hidden pb-16 md:pb-0">
             <MainContent />
           </div>
         </main>
@@ -150,6 +268,10 @@ export function App() {
         {/* Evidence rail */}
         <EvidenceRailShell />
       </div>
+
+      {/* Mobile navigation */}
+      <MobileBottomNav />
+      <MobileProjectDrawer />
     </div>
   )
 }
